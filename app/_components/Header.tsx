@@ -13,26 +13,28 @@ import { Avatar } from "@/components/ui/avatar";
 export default function Header() {
   return (
     <header className="flex justify-between items-center w-full px-4 py-2">
-      <div className="min-w-[150px] flex gap-4 bg-gray-700 text-white rounded items-center hover:scale-105 transition-transform duration-300">
+      <div className="min-w-[150px] flex gap-4 bg-gray-700 text-white rounded items-center duration-300 ">
         <Link href="/" className="text-xl p-2">
           Vice
         </Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="bg-gray-900">Каталог</Button>
+            <Button className="bg-gray-900 hover:bg-gray-500 transition-transform ">
+              Каталог
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem asChild>
-              <Link href="/">Смартфоны и Фототехника</Link>
+              <Link href="/catalog/Phones">Смартфоны и Фототехника</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/">Комплектующие для ПК</Link>
+              <Link href="/catalog/Computer">Комплектующие для ПК</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/">ТВ, Консоли, Аудио</Link>
+              <Link href="/catalog/Audio">ТВ, Консоли, Аудио</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/">ПК, Ноутбуки, Периферия</Link>
+              <Link href="/catalog/Laptops">ПК, Ноутбуки, Периферия</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

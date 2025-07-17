@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <section className="flex justify-between gap-15">
+      <section className="flex justify-between gap-10">
         <Link
           href="popular"
           className="bg-gray-700 text-white hover:scale-110 transition-transform duration-300 p-4 rounded"
@@ -36,13 +36,20 @@ export default function Home() {
           </div>
         </Link>
       </section>
-      <section className="flex items-center pt-20 h-[40]">
+      <section className="flex items-center pt-25 h-[40]">
         <div className="bg-gray-700 text-white gap-15 p-4 rounded">
           <Link href="defect">Уцененные товары</Link>
           <p className="pt-5">
             <Link href="discount">Товары со скидкой</Link>
           </p>
         </div>
+      </section>
+      <section className="flex items-center pt-45 h-[40] w-full">
+        <Link href="/">
+          <div className="bg-gray-700 text-white gap-15 p-4 rounded">
+            Блог о Жизни сайта и его обновлениях
+          </div>
+        </Link>
       </section>
     </main>
   );

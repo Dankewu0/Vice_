@@ -1,15 +1,17 @@
-// app/catalog/[category]/page.tsx
-
+import ProductCard from "@/app/_components/ProductCard";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { fetchData } from "@/app/lib/api";
 
 const categories = {
-  phones: "Смартфоны и Фототехника",
-  computer: "Комплектующие для ПК",
-  audio: "TV, Консоли, Аудио",
-  laptops: "ПК, Ноутбуки, Периферия",
+  Phones: "Смартфоны и Фототехника",
+  Computer: "Комплектующие для ПК",
+  Audio: "TV, Консоли, Аудио",
+  Laptops: "ПК, Ноутбуки, Периферия",
 };
 
-export default function CategoryPage({
+export async function CategoryPage({
   params,
 }: {
   params: { category: string };
@@ -19,12 +21,24 @@ export default function CategoryPage({
 
   const categoryTitle = categories[key as keyof typeof categories];
 
-  if (!categoryTitle) return notFound(); // 404 если категории не существует
-
+  if (!categoryTitle) return notFound();
+  const products = await fetchData(`/Product?category=${key}`);
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-bold">{categoryTitle}</h1>
-      {/* Тут можно отрендерить товары в категории */}
+    <main className="relative h-screen">
+      <h1 className="absolute left-50 -translate-x-1/2 text-2xl font-bold">
+        {categoryTitle}
+      </h1>
+      {products.map((product: any) => (
+        <ProductCard
+          key={product.id}
+          src={product.image}
+          alt={product.alt}
+          title={product.title}
+          price={product.price}
+        />
+      ))}
     </main>
   );
 }
+
+//id, src, alt, title, price
