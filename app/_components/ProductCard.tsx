@@ -1,6 +1,20 @@
 import Image from "next/image";
 
-export default function ProductCard({ src, alt, title, price }) {
+type ProductCardProps = {
+  id: number;
+  src: string;
+  alt: string;
+  title: string;
+  price: number;
+};
+
+export default function ProductCard({
+  id,
+  src,
+  alt,
+  title,
+  price,
+}: ProductCardProps) {
   return (
     <div className="bg-gray-700 rounded w-100 h-75 text-white p-4">
       <section className="relative w-full h-30">

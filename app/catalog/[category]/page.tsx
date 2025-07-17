@@ -1,8 +1,9 @@
 import ProductCard from "@/app/_components/ProductCard";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { fetchData } from "@/app/lib/api";
+import Loading from "@/app/_components/Loading";
+import ProductCardSkeleton from "@/app/_components/ProductCardSkeleton";
 
 const categories = {
   Phones: "Смартфоны и Фототехника",
@@ -11,7 +12,7 @@ const categories = {
   Laptops: "ПК, Ноутбуки, Периферия",
 };
 
-export async function CategoryPage({
+export default async function CategoryPage({
   params,
 }: {
   params: { category: string };
@@ -28,17 +29,17 @@ export async function CategoryPage({
       <h1 className="absolute left-50 -translate-x-1/2 text-2xl font-bold">
         {categoryTitle}
       </h1>
-      {products.map((product: any) => (
-        <ProductCard
-          key={product.id}
-          src={product.image}
-          alt={product.alt}
-          title={product.title}
-          price={product.price}
-        />
-      ))}
+      <Suspense fallback={<Loading />}>
+        {products.map((product: any) => (
+          <ProductCard
+            id={product.id}
+            src={product.image}
+            alt={product.alt}
+            title={product.title}
+            price={product.price}
+          />
+        ))}
+      </Suspense>
     </main>
   );
 }
-
-//id, src, alt, title, price
