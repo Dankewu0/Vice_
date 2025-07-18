@@ -25,21 +25,26 @@ export default async function CategoryPage({
   if (!categoryTitle) return notFound();
   const products = await fetchData(`/Product?category=${key}`);
   return (
-    <main className="relative h-screen">
-      <h1 className="absolute left-50 -translate-x-1/2 text-2xl font-bold">
-        {categoryTitle}
-      </h1>
-      <Suspense fallback={<Loading />}>
-        {products.map((product: any) => (
+    <main>
+      <h1>{categoryTitle}</h1>
+      {products.length === 0 ? (
+        <div className="flex flex-wrap gap-4 p-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      ) : (
+        products.map((product: any) => (
           <ProductCard
+            key={product.id}
             id={product.id}
             src={product.image}
             alt={product.alt}
             title={product.title}
             price={product.price}
           />
-        ))}
-      </Suspense>
+        ))
+      )}
     </main>
   );
 }
