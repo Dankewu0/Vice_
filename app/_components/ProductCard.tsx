@@ -16,12 +16,12 @@ export default function ProductCard({
   price,
 }: ProductCardProps) {
   return (
-    <div className="bg-gray-700 rounded w-100 h-75 text-white p-4">
-      <section className="relative w-full h-30">
-        <Image src={src} alt={alt} />
+    <div className="bg-gray-700 rounded w-full h-75 text-white p-4">
+      <section className="relative w-full h-48 mb-4">
+        <Image src={src} alt={alt} fill style={{ objectFit: "cover" }} />
       </section>
-      <section>{title}</section>
-      <section>{price}</section>
+      <section className="text-lg font-semibold">{title}</section>
+      <section className="text-sm">{price} ₽</section>
     </div>
   );
 }

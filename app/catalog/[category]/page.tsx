@@ -1,8 +1,6 @@
 import ProductCard from "@/app/_components/ProductCard";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { fetchData } from "@/app/lib/api";
-import Loading from "@/app/_components/Loading";
 import ProductCardSkeleton from "@/app/_components/ProductCardSkeleton";
 
 const categories = {
@@ -12,18 +10,33 @@ const categories = {
   Laptops: "ПК, Ноутбуки, Периферия",
 };
 
+const categoryIds = {
+  Phones: 1,
+  Computer: 2,
+  Audio: 3,
+  Laptops: 4,
+};
+
 export default async function CategoryPage({
   params,
 }: {
   params: { category: string };
 }) {
   const key = params.category;
+
   if (!(key in categories)) return notFound();
 
   const categoryTitle = categories[key as keyof typeof categories];
-
   if (!categoryTitle) return notFound();
-  const products = await fetchData(`/Product?category=${key}`);
+
+  const categoryId = categoryIds[key as keyof typeof categoryIds];
+  if (!categoryId) return notFound();
+
+  const productsResponse = await fetchData(
+    `/products?category_id=${categoryId}`,
+  );
+  const products = productsResponse.data || productsResponse;
+
   return (
     <main>
       <h1>{categoryTitle}</h1>
@@ -34,16 +47,18 @@ export default async function CategoryPage({
           ))}
         </div>
       ) : (
-        products.map((product: any) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            src={product.image}
-            alt={product.alt}
-            title={product.title}
-            price={product.price}
-          />
-        ))
+        <div className="flex flex-wrap gap-4 p-4">
+          {products.map((product: any) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              src={product.image}
+              alt={product.alt || product.title}
+              title={product.title}
+              price={product.price}
+            />
+          ))}
+        </div>
       )}
     </main>
   );
