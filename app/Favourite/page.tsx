@@ -1,0 +1,13 @@
+import {Suspense} from "react";
+import ProductCardSkeleton from "@/app/_components/ProductCardSkeleton";
+import Favorite from "@/app/Favourite/Favourite";
+export default function Favourite() {
+  return (
+    <main className="text-white">
+      <h1>Избранное</h1>
+      <Suspense fallback={<ProductCardSkeleton/>}>
+        <Favourite />
+      </Suspense>
+    </main>
+  )
+}

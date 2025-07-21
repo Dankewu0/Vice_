@@ -45,7 +45,7 @@ export default function Home() {
         </div>
       </section>
       <section className="flex items-center pt-45 h-[40] w-full">
-        <Link href="/">
+        <Link href="Blog">
           <div className="bg-gray-700 text-white gap-15 p-4 rounded">
             Блог о Жизни сайта и его обновлениях
           </div>
