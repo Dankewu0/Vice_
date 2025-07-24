@@ -18,9 +18,9 @@ const categoryIds = {
 };
 
 export default async function CategoryPage({
-  params,
-}: {
-  params: { category: string };
+                                             params,
+                                           }: {
+  params: { category: string };  // Просто объект, не промис
 }) {
   const key = params.category;
 
@@ -32,14 +32,15 @@ export default async function CategoryPage({
   const categoryId = categoryIds[key as keyof typeof categoryIds];
   if (!categoryId) return notFound();
 
-  const productsResponse = await fetchData(
-    `/products?category_id=${categoryId}`,
-  );
-  const products = productsResponse.data || productsResponse;
+  // Получаем данные (в API предполагаем, что фильтрация происходит по category_id)
+  const productsResponse = await fetchData(`/products?id_category=${categoryId}`);
+  const products = productsResponse.data;
+
 
   return (
     <main>
-      <h1>{categoryTitle}</h1>
+      <h1 className="text-2xl font-bold mb-6">{categoryTitle}</h1>
+
       {products.length === 0 ? (
         <div className="flex flex-wrap gap-4 p-4">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -53,9 +54,9 @@ export default async function CategoryPage({
               key={product.id}
               id={product.id}
               src={product.image}
-              alt={product.alt || product.title}
-              title={product.title}
-              price={product.price}
+              alt={product.description || "Product image"}
+              title={product.name || "Без названия"}
+              price={product.price || 0}
             />
           ))}
         </div>
